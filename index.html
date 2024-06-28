@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Count the Shapes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="./tsparticles.confetti.bundle.min.js"></script>
+  <script src="./app.js"></script>
+  <style>
+    @font-face {
+      font-family: 'comic';
+      src: url(./fonts/comic.woff2) format('woff2');
+    }
+
+    @font-face {
+      font-family: 'comicbd';
+      font-weight: bold;
+      src: url(./fonts/comicbd.woff2) format('woff2');
+    }
+
+    * { 
+      font-family: 'Comic Sans MS', 'comic', sans-serif; 
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    .hidden {
+      opacity: 0;
+    }
+
+    nav {
+      z-index: 2;
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 0;
+    }
+
+    .navDiv {
+      display: inline-block;
+    }
+
+    .button {
+      /* margin-left: auto; */
+      display: block;
+      height: 42px;
+      image-rendering: pixelated;
+    }
+
+    .button:hover {
+      animation: shiftDown 0.25s step-start;
+    }
+
+    .button:active {
+      transform: translateY(3px);
+    }
+
+    @keyframes shiftDown {
+      to { transform: translateY(3px); } 
+    }
+
+    main {
+      width: 1024px;
+      height: 768px;
+      position: absolute;
+      transform-origin: top left;
+    }
+
+    #shapeContainer {
+      margin-left: 5px;
+      margin-top: 5px;
+      width: 800px;
+      height: 768px;
+    }
+
+    svg {
+      animation: wiggle 1.0s infinite;
+      padding: 1px 5px;
+      border-radius: 10px;
+    }
+
+    #count {
+      font-size: 172px;
+      position: absolute;
+      top: 250px;
+      right: 0;
+      width: 224px;
+      text-align: center;
+    }
+
+    #settings {
+      font-size: 28px;
+      z-index: 100;
+      position: absolute;
+      width: 940px;
+      top: 250px;
+      left: 27px;
+      background-color: white;
+      padding: 10px;
+      border: 5px solid black;
+      border-radius: 10px;
+      visibility: hidden;
+    }
+
+    #settings input[type="radio"] {
+      height: 32px;
+      width: 32px;
+      margin-bottom: 35px;
+    }
+
+    #settings select {
+      font-size: 28px;
+    }
+
+    #settings button {
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    @keyframes wiggle {
+      0% { transform: translate(0, -2%); }
+      50% { transform: translate(0, 2%); }
+      100% { transform: translate(0, -2%); }
+    }
+
+    svg:has(.counted) {
+      background-color: pink;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <nav>
+      <div class="navDiv">
+        <img src="./images/Buttons/Settings.png" id="settingsButton" class="button">
+      </div>
+      <div class="navDiv">
+        <img src="./images/Buttons/Restart.png" id="restartButton" class="button">
+      </div>
+    </nav>
+    <div id="shapeContainer"></div>
+    <div id="count">13</div>
+    <div id="settings">
+      <input name="gameType" value="random" type="radio" checked="checked">
+      Completely random
+      <br>
+
+      <input name="gameType" value="one_color_only" type="radio"> Show only the color
+      <select name="showOnlyColor">
+        <option value="red">red</option>
+        <option value="orange">orange</option>
+        <option value="yellow">yellow</option>
+        <option value="green">green</option>
+        <option value="blue">blue</option>
+        <option value="purple" selected="selected">purple</option>
+      </select>
+      <br>
+
+      <input name="gameType" value="one_shape_only" type="radio"> Show only the shape
+      <select name="showOnlyShape">
+        <option value="circle">circle</option>
+        <option value="heart" selected="selected">heart</option>
+        <option value="square">square</option>
+        <option value="rectangle">rectangle</option>
+        <option value="star">star</option>
+        <option value="triangle">triangle</option>
+      </select>
+      <br>
+
+      <input name="gameType" value="exact_count_color_shape" type="radio"> Make sure there are exactly 
+      <select name="exactlyNumber">
+        <option value="one">one</option>
+        <option value="two">two</option>
+        <option value="three">three</option>
+        <option value="four">four</option>
+        <option value="five">five</option>
+        <option value="six">six</option>
+        <option value="seven" selected="selected">seven</option>
+        <option value="eight">eight</option>
+        <option value="nine">nine</option>
+        <option value="ten">ten</option>
+      </select>
+      <select name="exactlyColor">
+        <option value="red">red</option>
+        <option value="orange">orange</option>
+        <option value="yellow">yellow</option>
+        <option value="green">green</option>
+        <option value="blue">blue</option>
+        <option value="purple" selected="selected">purple</option>
+      </select>
+      <select name="exactlyShape">
+        <option value="circle">circles</option>
+        <option value="heart" selected="selected">hearts</option>
+        <option value="square">squares</option>
+        <option value="rectangle">rectangles</option>
+        <option value="star">stars</option>
+        <option value="triangle">triangles</option>
+      </select>
+      <br>
+
+      <button id="saveSettingsButton">Save</button>
+      <button id="cancelSettingsButton">Cancel</button>
+    </div>
+  </main>
+</body>
+</html>
